@@ -1,4 +1,5 @@
 package viasat.ua.bitmaptest;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,9 +41,11 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... urls) {
-        iv = (ImageView) v.findViewById(R.id.iv1);
-        System.out.println(url.toString());
-        finalBmp = putBitmapInDiskCache(url, DownloadImageFromPath(url.toString()));
+
+
+
+
+        finalBmp = putBitmapInDiskCache(url,DownloadImageFromPath(url.toString()));
         return null;
     }
 
@@ -50,13 +54,14 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         v.runOnUiThread(new Runnable() {
             public void run() {
-                iv.setImageBitmap(finalBmp);
+                iv = (ImageView) v.findViewById(R.id.iv1);
+                    iv.setImageBitmap(finalBmp);
             }
         });
     }
 
 
-    public Bitmap DownloadImageFromPath(String path) {
+   public Bitmap DownloadImageFromPath(String path) {
 
         InputStream in = null;
         Bitmap bmp = null;
@@ -66,6 +71,7 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setDoInput(true);
             con.connect();
+
             //download info for catch
             Map<String, List<String>> map = con.getHeaderFields();
             CacheControl = map.get("Cache-Control").toString();
@@ -100,13 +106,15 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
         File cacheDir = new File(v.getCacheDir(), "thumbnails");
         // Create a path in that dir for a file, named by the default hash of the url
         File cacheFile = new File(cacheDir, "" + url.hashCode());
+
+
         FileInputStream fis = null;
         ArrayList<String> FileNames = getFileNames(GetFiles(cacheDir.toString()));
         System.out.println(Arrays.toString(FileNames.toArray()));
         System.out.println(cacheDir.toString() + url.hashCode());
         //if exist
-        if (FileNames.contains(String.valueOf(url.hashCode())) == false) {
-
+        if(FileNames.contains(String.valueOf(url.hashCode()))==false)
+        {
             try {
                 // Create a file at the file path, and open it for writing obtaining the output stream
                 cacheFile.createNewFile();
@@ -142,12 +150,12 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
         return file;
     }
 
-    public ArrayList<String> getFileNames(File[] file) {
+    public ArrayList<String> getFileNames(File[] file){
         ArrayList<String> arrayFiles = new ArrayList<String>();
         if (file.length == 0)
             return null;
         else {
-            for (int i = 0; i < file.length; i++)
+            for (int i=0; i<file.length; i++)
                 arrayFiles.add(file[i].getName());
         }
         return arrayFiles;

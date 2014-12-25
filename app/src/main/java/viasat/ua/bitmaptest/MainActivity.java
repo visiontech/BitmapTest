@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.net.UnknownHostException;
+
 
 public class MainActivity extends ActionBarActivity {
     Bitmap map = null;
@@ -18,7 +20,10 @@ public class MainActivity extends ActionBarActivity {
         // ImageView iv = (ImageView) findViewById(R.id.iv1);
 
         ImageAT dsp = new ImageAT(this,"https://pp.vk.me/c425822/v425822148/bb05/kSMcna7Z4wE.jpg");
-        dsp.execute();
+        ImageAT dsp2 = new ImageAT(this,"https://pp.vk.me/c618128/v618128148/1f570/rvZdNsqdpAs.jpg");
+
+           dsp.execute();
+        dsp2.execute();
 
 
     }
