@@ -17,7 +17,7 @@ public class MainActivity extends ActionBarActivity {
         // LinearLayout ln = (LinearLayout) findViewById(R.id.ln1);
         // ImageView iv = (ImageView) findViewById(R.id.iv1);
 
-        ImageAT dsp = new ImageAT(this);
+        ImageAT dsp = new ImageAT(this,"https://pp.vk.me/c425822/v425822148/bb05/kSMcna7Z4wE.jpg");
         dsp.execute();
 
 
