@@ -33,9 +33,10 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
     private Bitmap finalBmp;
     private ImageView iv;
 
-    public ImageAT(Activity v, String url) {
+    public ImageAT(Activity v, String url, ImageView iv) {
         this.v = v;
         this.url = Uri.parse(url);
+        this.iv = iv;
     }
 
 
@@ -43,9 +44,7 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
     protected Bitmap doInBackground(String... urls) {
 
 
-
-
-        finalBmp = putBitmapInDiskCache(url,DownloadImageFromPath(url.toString()));
+       finalBmp = putBitmapInDiskCache(url,DownloadImageFromPath(url.toString()));
         return null;
     }
 
@@ -54,7 +53,6 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         v.runOnUiThread(new Runnable() {
             public void run() {
-                iv = (ImageView) v.findViewById(R.id.iv1);
                     iv.setImageBitmap(finalBmp);
             }
         });
@@ -109,12 +107,13 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
 
 
         FileInputStream fis = null;
-        ArrayList<String> FileNames = getFileNames(GetFiles(cacheDir.toString()));
+        ArrayList<String> FileNames = getFileNames(GetFiles(v.getCacheDir().toString()));
         System.out.println(Arrays.toString(FileNames.toArray()));
         System.out.println(cacheDir.toString() + url.hashCode());
         //if exist
         if(FileNames.contains(String.valueOf(url.hashCode()))==false)
         {
+
             try {
                 // Create a file at the file path, and open it for writing obtaining the output stream
                 cacheFile.createNewFile();

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.net.UnknownHostException;
 
@@ -16,13 +18,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // LinearLayout ln = (LinearLayout) findViewById(R.id.ln1);
-        // ImageView iv = (ImageView) findViewById(R.id.iv1);
+        LinearLayout ln = (LinearLayout) findViewById(R.id.ln1);
+        ImageView iv = (ImageView) findViewById(R.id.iv1);
+        ImageView iv2 = (ImageView) findViewById(R.id.iv2);
+        ImageAT dsp = new ImageAT(this,"https://pp.vk.me/c425822/v425822148/bb05/kSMcna7Z4wE.jpg",iv);
+        ImageAT dsp2 = new ImageAT(this,"https://pp.vk.me/c618128/v618128148/1f570/rvZdNsqdpAs.jpg",iv2);
 
-        ImageAT dsp = new ImageAT(this,"https://pp.vk.me/c425822/v425822148/bb05/kSMcna7Z4wE.jpg");
-        ImageAT dsp2 = new ImageAT(this,"https://pp.vk.me/c618128/v618128148/1f570/rvZdNsqdpAs.jpg");
-
-           dsp.execute();
+        dsp.execute();
         dsp2.execute();
 
 
