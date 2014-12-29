@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -15,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +46,7 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
     protected Bitmap doInBackground(String... urls) {
 
 
-       finalBmp = putBitmapInDiskCache(url,DownloadImageFromPath(url.toString()));
+       finalBmp = putBitmapInDiskCache(url);
         return null;
     }
 
@@ -88,7 +90,12 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
                 in.close();
                 finalBmp = bmp;
             }
-        } catch (Exception ex) {
+
+        }
+        catch (UnknownHostException e){
+            Log.e("Exception", e.toString());
+        }
+        catch (Exception ex) {
             Log.e("Exception", ex.toString());
         }
         return finalBmp;
@@ -98,21 +105,23 @@ public class ImageAT extends AsyncTask<String, Void, Bitmap> {
     /**
      * Write bitmap associated with a url to disk cache
      */
-    private Bitmap putBitmapInDiskCache(Uri url, Bitmap avatar) {
+    private Bitmap putBitmapInDiskCache(Uri url) {
         // Create a path pointing to the system-recommended cache dir for the app, with sub-dir named
-        // thumbnails
-        File cacheDir = new File(v.getCacheDir(), "thumbnails");
+        File sdCard = Environment.getExternalStorageDirectory();
+        // img
+        File cacheDir = new File(sdCard+"/Android/data/"+v.getPackageName(), "thumbnails");
+        cacheDir.mkdir();
         // Create a path in that dir for a file, named by the default hash of the url
         File cacheFile = new File(cacheDir, "" + url.hashCode());
 
 
         FileInputStream fis = null;
-        ArrayList<String> FileNames = getFileNames(GetFiles(v.getCacheDir().toString()));
+        ArrayList<String> FileNames = getFileNames(GetFiles(sdCard + "/Android/data/" + v.getPackageName()));
         System.out.println(Arrays.toString(FileNames.toArray()));
         System.out.println(cacheDir.toString() + url.hashCode());
         //if exist
         if(FileNames.contains(String.valueOf(url.hashCode()))==false)
-        {
+        {      Bitmap avatar = DownloadImageFromPath(url.toString());
 
             try {
                 // Create a file at the file path, and open it for writing obtaining the output stream
